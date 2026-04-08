@@ -1,0 +1,9 @@
+﻿  main.cpp
+/main.cpp(1,1): error C1083: 소스 파일을 열 수 없습니다. 'main.cpp': No such file or directory
+  (소스 파일 '/main.cpp'을(를) 컴파일하는 중)
+  
+  Rectangle.h
+/Rectangle.h(1,1): error C1083: 소스 파일을 열 수 없습니다. 'Rectangle.h': No such file or directory
+  (소스 파일 '/Rectangle.h'을(를) 컴파일하는 중)
+  
+  코드를 생성하고 있습니다...
