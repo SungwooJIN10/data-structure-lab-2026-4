@@ -1,7 +1,7 @@
 #pragma once
 #include <stdio.h>
 
-#define MAX_VTXS 256
+#define MAX_VTXS 20
 
 class AdjMatGraph {
 protected:
@@ -10,10 +10,17 @@ protected:
     int adj[MAX_VTXS][MAX_VTXS];
 
 public:
-    AdjMatGraph() { reset(); }
+    AdjMatGraph() {
+        reset();
+    }
 
-    char getVertex(int i) { return vertices[i]; }
-    int getEdge(int i, int j) { return adj[i][j]; }
+    char getVertex(int i) {
+        return vertices[i];
+    }
+
+    int getEdge(int i, int j) {
+        return adj[i][j];
+    }
 
     void setEdge(int i, int j, int val) {
         adj[i][j] = val;
@@ -35,6 +42,7 @@ public:
                 setEdge(i, j, 0);
     }
 
+    // 정점 삽입
     void insertVertex(char name) {
         if (!isFull())
             vertices[size++] = name;
@@ -42,11 +50,13 @@ public:
             printf("Error: 그래프 정점 개수 초과\n");
     }
 
+    // 간선 삽입
     void insertEdge(int u, int v) {
         setEdge(u, v, 1);
         setEdge(v, u, 1);
     }
 
+    // 그래프 출력
     void display(FILE* fp = stdout) {
         fprintf(fp, "%d\n", size);
 
