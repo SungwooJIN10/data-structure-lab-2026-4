@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stack>
+#include <deque>
 #include "Location2D.h"
 
 using namespace std;
@@ -19,54 +20,103 @@ bool isValidLoc(int r, int c)
 {
     if (r < 0 || c < 0 || r >= MAZE_SIZE || c >= MAZE_SIZE)
         return false;
-
     else
         return map[r][c] == '0' || map[r][c] == 'x';
 }
 
-void main()
+int main()
 {
-    stack<Location2D> locStack;
+    int ds_num;
 
-    Location2D entry(1, 0);
+    printf("DFS 데이터 구조 라이브러리 선택: 1)stack, 2)deque \n");
+    scanf_s("%d", &ds_num);
 
-    locStack.push(entry);
+    switch (ds_num) {
 
-    while (locStack.empty() == false) {
+    case 1:
+    {
+        stack<Location2D> locStack;
+        Location2D entry(1, 0);
+        locStack.push(entry);
 
-        Location2D here = locStack.top();
+        while (locStack.empty() == false) {
+            Location2D here = locStack.top();
+            locStack.pop();
 
-        locStack.pop();
+            int r = here.row;
+            int c = here.col;
 
-        int r = here.row;
-        int c = here.col;
+            printf("(%d,%d) ", r, c);
 
-        printf("(%d,%d) ", r, c);
+            if (map[r][c] == 'x') {
+                printf("미로 탐색 성공\n");
+                return 0;
+            }
+            else {
+                map[r][c] = '.';
 
-        if (map[r][c] == 'x') {
+                if (isValidLoc(r - 1, c))
+                    locStack.push(Location2D(r - 1, c));
 
-            printf("미로 탐색 성공\n");
+                if (isValidLoc(r + 1, c))
+                    locStack.push(Location2D(r + 1, c));
 
-            return;
+                if (isValidLoc(r, c - 1))
+                    locStack.push(Location2D(r, c - 1));
+
+                if (isValidLoc(r, c + 1))
+                    locStack.push(Location2D(r, c + 1));
+            }
         }
 
-        else {
+        break;
+    }
 
-            map[r][c] = '.';
+    case 2:
+    {
+        deque<Location2D> locDeque;
+        Location2D entry(1, 0);
+        locDeque.push_front(entry);
 
-            if (isValidLoc(r - 1, c))
-                locStack.push(Location2D(r - 1, c));
+        while (locDeque.empty() == false) {
+            Location2D here = locDeque.front();
+            locDeque.pop_front();
 
-            if (isValidLoc(r + 1, c))
-                locStack.push(Location2D(r + 1, c));
+            int r = here.row;
+            int c = here.col;
 
-            if (isValidLoc(r, c - 1))
-                locStack.push(Location2D(r, c - 1));
+            printf("(%d,%d) ", r, c);
 
-            if (isValidLoc(r, c + 1))
-                locStack.push(Location2D(r, c + 1));
+            if (map[r][c] == 'x') {
+                printf("미로 탐색 성공\n");
+                return 0;
+            }
+            else {
+                map[r][c] = '.';
+
+                if (isValidLoc(r - 1, c))
+                    locDeque.push_front(Location2D(r - 1, c));
+
+                if (isValidLoc(r + 1, c))
+                    locDeque.push_front(Location2D(r + 1, c));
+
+                if (isValidLoc(r, c - 1))
+                    locDeque.push_front(Location2D(r, c - 1));
+
+                if (isValidLoc(r, c + 1))
+                    locDeque.push_front(Location2D(r, c + 1));
+            }
         }
+
+        break;
+    }
+
+    default:
+        printf("잘못된 선택입니다.\n");
+        return 0;
     }
 
     printf("미로 탐색 실패\n");
+
+    return 0;
 }
