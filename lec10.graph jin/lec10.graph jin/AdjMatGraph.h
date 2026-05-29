@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #define MAX_VTXS 20
+#define INF 9999
 
 class AdjMatGraph {
 protected:
@@ -42,7 +43,6 @@ public:
                 setEdge(i, j, 0);
     }
 
-    // 정점 삽입
     void insertVertex(char name) {
         if (!isFull())
             vertices[size++] = name;
@@ -50,13 +50,11 @@ public:
             printf("Error: 그래프 정점 개수 초과\n");
     }
 
-    // 간선 삽입
     void insertEdge(int u, int v) {
         setEdge(u, v, 1);
         setEdge(v, u, 1);
     }
 
-    // 그래프 출력
     void display(FILE* fp = stdout) {
         fprintf(fp, "%d\n", size);
 
@@ -64,9 +62,53 @@ public:
             fprintf(fp, "%c ", getVertex(i));
 
             for (int j = 0; j < size; j++)
-                fprintf(fp, "%3d", getEdge(i, j));
+                fprintf(fp, "%5d", getEdge(i, j));
 
             fprintf(fp, "\n");
+        }
+    }
+};
+
+class WGraph : public AdjMatGraph {
+public:
+    void insertEdge(int u, int v, int weight) {
+        if (weight > INF)
+            weight = INF;
+
+        setEdge(u, v, weight);
+    }
+
+    bool hasEdge(int i, int j) {
+        return getEdge(i, j) < INF;
+    }
+
+    void load(const char* filename) {
+        FILE* fp;
+
+        fopen_s(&fp, filename, "r");
+
+        if (fp != NULL) {
+            int n, val;
+
+            fscanf_s(fp, "%d", &n);
+
+            for (int i = 0; i < n; i++) {
+                char str[80];
+
+                fscanf_s(fp, "%s", str, sizeof(str));
+
+                insertVertex(str[0]);
+
+                for (int j = 0; j < n; j++) {
+                    fscanf_s(fp, "%d", &val);
+                    insertEdge(i, j, val);
+                }
+            }
+
+            fclose(fp);
+        }
+        else {
+            printf("파일을 열 수 없습니다.\n");
         }
     }
 };

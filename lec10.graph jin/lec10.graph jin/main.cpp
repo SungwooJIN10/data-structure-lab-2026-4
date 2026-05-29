@@ -1,7 +1,12 @@
 #include "SrchAMGraph.h"
+#include "WGraphMST.h"
 
-void main()
+int main()
 {
+    /***********************
+        기존 DFS 실습
+    ************************/
+
     SrchAMGraph g;
 
     for (int i = 0; i < 8; i++)
@@ -23,5 +28,22 @@ void main()
     printf("DFS ==> ");
     g.resetVisited();
     g.DFS(0);
-    printf("\n");
+    printf("\n\n");
+
+
+    /***********************
+        MST 실습
+    ************************/
+
+    WGraphMST wg;
+
+    wg.load("graph.txt");
+
+    printf("가중치 그래프\n");
+    wg.display();
+
+    printf("\nMST By Kruskal's Algorithm\n");
+    wg.Kruskal();
+
+    return 0;
 }

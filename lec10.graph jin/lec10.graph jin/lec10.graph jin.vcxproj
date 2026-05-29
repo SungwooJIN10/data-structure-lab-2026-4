@@ -131,7 +131,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdjMatGraph.h" />
+    <ClInclude Include="HeapNode.h" />
+    <ClInclude Include="MinHeap.h" />
     <ClInclude Include="SrchAMGraph.h" />
+    <ClInclude Include="VertexSets.h" />
+    <ClInclude Include="WGraphMST.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
