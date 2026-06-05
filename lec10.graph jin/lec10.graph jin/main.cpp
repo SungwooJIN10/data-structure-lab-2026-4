@@ -1,12 +1,10 @@
 #include "SrchAMGraph.h"
 #include "WGraphMST.h"
+#include "WGraphPrim.h"
+#include "WGraphDijkstra.h"
 
 int main()
 {
-    /***********************
-        기존 DFS 실습
-    ************************/
-
     SrchAMGraph g;
 
     for (int i = 0; i < 8; i++)
@@ -30,11 +28,6 @@ int main()
     g.DFS(0);
     printf("\n\n");
 
-
-    /***********************
-        MST 실습
-    ************************/
-
     WGraphMST wg;
 
     wg.load("graph.txt");
@@ -44,6 +37,20 @@ int main()
 
     printf("\nMST By Kruskal's Algorithm\n");
     wg.Kruskal();
+
+    WGraphPrim pg;
+
+    pg.load("graph.txt");
+
+    printf("\nMST By Prim's Algorithm\n");
+    pg.Prim(0);
+
+    WGraphDijkstra dg;
+
+    dg.load("graph.txt");
+
+    printf("\nShortest Path By Dijkstra Algorithm\n");
+    dg.ShortestPath(0);
 
     return 0;
 }
